@@ -9,5 +9,5 @@ jobs:
     steps:
       - checkout
       - aws-s3/copy:
-          from: ./index.html
-          to: 's3://s3-static-website.test.com'
+          from: index.html
+          to: 's3://s3-static-website.test.com/index.html'
