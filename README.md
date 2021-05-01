@@ -1,5 +1,13 @@
 # S3 Static Website CI/CD
 
+- [Overview](#overview)
+- [Dependencies](#dependencies)
+- [Step 1. Create Project](#step-1-create-project)
+- [Step 2. Github](#step-2-github)
+- [Step 3. AWS](#step-3-aws)
+- [Step 4. Terraform](#step-4-terraform)
+- [Step 5. CircleCI](#step-5-circleci)
+
 ## Overview
 1. Developer pushes code to GitHub.
 1. When code is merged CircleCI kicks off a deploy to S3.
