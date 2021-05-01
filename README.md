@@ -72,7 +72,8 @@ Default output format [None]: json
 provider.tf 
 
 provider "aws" {
-    profile = <profile_name>
+    region = "us-east-1"
+    profile = "<profile_name>"
 }
 
 ```
