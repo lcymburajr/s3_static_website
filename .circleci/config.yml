@@ -5,6 +5,7 @@ orbs:
 
 jobs:
   build:
+  machine: true
     steps:
       - checkout
       - aws-s3/copy:

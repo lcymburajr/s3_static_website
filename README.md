@@ -194,13 +194,14 @@ version: 2.1
 orbs:
   aws-s3: circleci/aws-s3@2.0.0
 
-  jobs:
-    build:
-      steps:
-        - checkout
-        - aws-s3/copy:
-            from: ./index.html
-            to: 's3://s3-static-website.test.com
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - aws-s3/copy:
+          from: ./index.html
+          to: 's3://s3-static-website.test.com'
 
 ```
 ***Reference: [S3 Orb](https://circleci.com/developer/orbs/orb/circleci/aws-s3)***
