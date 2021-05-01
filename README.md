@@ -56,8 +56,8 @@ $ git push -u origin main
 
 # Step 3. AWS
 1. Create an AWS account.
-1. Create and IAM User with Admin permissions.
-1. Download Access keys and configure AWS on computer:
+1. Create IAM user with admin permissions.
+1. Download user's access keys and configure AWS on computer:
 ```
 $ aws configure --profile <profile_name>
 AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
@@ -77,3 +77,99 @@ provider "aws" {
 }
 
 ```
+2. Create state bucket:
+```
+state.tf 
+
+resource "aws_s3_bucket" "terraform-state" {
+  bucket = "terraform-state-static-website"
+  acl    = "private"
+  
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  tags = {
+    Name = "Terraform state"
+  }
+}
+```
+3. Init terraform:
+```
+$ terraform init
+```
+4. Check terraform:
+```
+$ terraform plan
+```
+5. Create the state bucket:
+```
+$ terraform apply
+```
+6. Create Terraform backend and use state bucket:
+```
+backend.tf
+
+terraform {
+ backend "s3" {
+   bucket  = "terraform-state-static-website"
+   key     = "terraform.tfstate"
+   region  = "us-east-1"
+   profile = "<profile_name>"
+ }
+}
+
+```
+7. Create S3 static website bucket:
+```
+s3_static_website.tf
+
+resource "aws_s3_bucket" "site" {
+  bucket = "s3-static-website.test.com"
+  acl    = "public-read"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource = [
+          "arn:aws:s3:::s3-static-website.test.com",
+          "arn:aws:s3:::s3-static-website.test.com/*",
+        ]
+      },
+    ]
+  })
+
+  website {
+    index_document = "index.html"
+    error_document = "index.html"
+  }
+
+  tags = {
+    Name = "S3 Static Website"
+  }
+}
+```
+***Reference: [Static Website](https://learn.hashicorp.com/tutorials/terraform/cloudflare-static-website)***
+
+8. Init terraform:
+```
+$ terraform init
+```
+9. Check terraform:
+```
+$ terraform plan
+```
+10. Create the S3 static website bucket:
+```
+$ terraform apply
+```
+
+# Step 5. CircleCI
