@@ -3,9 +3,10 @@
 ## Overview
 1. Developer pushes code to GitHub.
 1. When code is merged CircleCI kicks off a deploy to S3.
-1. From Web Browser vists S3 endpoint.  
+1. From Web Browser vist S3 endpoint.  
 
-![S3 CI/CD](diagram/s3_cicd.png) 
+![S3 CI/CD](diagram/s3_cicd.png)  
+***Diagram made with draw.io***
 
 # Dependencies 
 - Git
@@ -13,6 +14,7 @@
 - Terraform
 - CircleCI Account
 - AWS Account
+- AWS CLI
 
 ## Installing Dependencies
 Install Homebrew for Dependencies:
@@ -23,6 +25,10 @@ Install Terraform:
 ```
 $ brew install terraform
 ```  
+Install AWS CLI:
+```
+$ brew install aws_cli
+```
 
 # Step 1. Create Project
 Create project folder on computer:
@@ -48,3 +54,25 @@ $ git remote add origin https://github.com/<username>/s3_static_website.git
 $ git push -u origin main
 ```
 
+# Step 3. AWS
+1. Create an AWS account.
+1. Create and IAM User with Admin permissions.
+1. Download Access keys and configure AWS on computer:
+```
+$ aws configure --profile <profile_name>
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: us-east-1
+Default output format [None]: json
+```
+
+# Step 4. Terraform
+1. Create provider and use aws profile:
+```
+provider.tf 
+
+provider "aws" {
+    profile = <profile_name>
+}
+
+```
