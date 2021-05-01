@@ -7,6 +7,7 @@
 - [Step 3. AWS](#step-3-aws)
 - [Step 4. Terraform](#step-4-terraform)
 - [Step 5. CircleCI](#step-5-circleci)
+- [Step 5. HTML](#step-6-html)
 
 ## Overview
 1. Developer pushes code to GitHub.
@@ -43,7 +44,7 @@ Create project folder on computer:
 ```
 $ mkdir s3_static_website
 ```
-Open project in code editor:
+Open project in VS Code editor:
 ```
 $ code s3_static_website 
 ```
@@ -181,14 +182,16 @@ $ terraform apply
 ```
 
 # Step 5. CircleCI
-1. Create [CircleCI](https://circleci.com/) Account sign in with Github account.
+1. Create [CircleCI](https://circleci.com/) account sign in with Github account.
 1. Go to projects and click "Set Up Project" on "s3_static_website" repo.
 1. In project folder create CircleCI config.yml in .circleci directory:
 ```
 .circleci/config.yml
 ```
-4. Use S3 Orb:
+4. Use S3 Orb and create config:
 ```
+config.yml
+
 version: 2.1
 
 orbs:
@@ -200,8 +203,8 @@ jobs:
     steps:
       - checkout
       - aws-s3/copy:
-          from: ./index.html
-          to: 's3://s3-static-website.test.com'
+          from: index.html
+          to: 's3://s3-static-website.test.com/index.html'
 
 ```
 ***Reference: [S3 Orb](https://circleci.com/developer/orbs/orb/circleci/aws-s3)***
@@ -215,13 +218,12 @@ AWS_REGION
 
 # Step 6. HTML
 
-Create a new git branch:
+1. In project create a new git branch:
 ```
 git checkout -b feature/html
 ```
 
-Create Index page:
-
+2. Create Index page:
 ```
 index.html
 
@@ -239,15 +241,15 @@ index.html
 </html>
 ```
 
-Git track, commit and push
+3. Git track, commit and push:
 ```
 git add .
 git commit -m "website"
 git push
 ```
 
-1. Go to github create a Pull request review and merge.
-1. Wait for circleCI finished build.
-1. go to s3 static bucket url and you should see your webpage!
+4. Go to Github, create a pull request, review and merge.
+1. Wait for CircleCI finish build.
+1. Go to S3 static bucket url and you should see your webpage!
 
 
