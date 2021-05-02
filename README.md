@@ -52,7 +52,7 @@ $ code s3_static_website
 # Step 2. Github
 1. Go to [Github](https://github.com/) and create an account.
 1. Create a new repo.
-1. Inside project on computer init and commit a Readme to github:
+1. Inside project on computer init and commit a "readme" to github:
 ```
 $ echo "# s3_static_website" >> README.md
 $ git init
