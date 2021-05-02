@@ -12,7 +12,7 @@
 ## Overview
 1. Developer pushes code to GitHub.
 1. When code is merged CircleCI kicks off a deploy to S3.
-1. From Web Browser vist S3 endpoint.  
+1. From Web Browser visit S3 endpoint.  
 
 ![S3 CI/CD](diagram/s3_cicd.png)  
 ***Diagram made with [draw.io](https://app.diagrams.net/)***
