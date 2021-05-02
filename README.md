@@ -115,10 +115,11 @@ $ terraform init
 ```
 $ terraform plan
 ```
-5. Create the state bucket:
+5. Deploy the state bucket:
 ```
 $ terraform apply
 ```
+
 6. Create Terraform backend and use state bucket:
 ```
 backend.tf
@@ -176,7 +177,7 @@ $ terraform init
 ```
 $ terraform plan
 ```
-10. Create the S3 static website bucket:
+10. Deploy the S3 static website bucket:
 ```
 $ terraform apply
 ```
@@ -196,7 +197,7 @@ terraform.*
 ```
 .circleci/config.yml
 ```
-4. Use S3 Orb and create config:
+4. Use CircleCI S3 Orb and create config:
 ```
 config.yml
 
@@ -217,7 +218,7 @@ jobs:
 ```
 ***Reference: [S3 Orb](https://circleci.com/developer/orbs/orb/circleci/aws-s3)***
 
-5. In Project settings add AWS user access keys and region to CircleCI environment variables:
+5. In "Project Settings" add AWS user access keys and region to CircleCI environment variables:
 ```
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
