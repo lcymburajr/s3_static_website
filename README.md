@@ -180,6 +180,14 @@ $ terraform plan
 ```
 $ terraform apply
 ```
+11. Add Git ignore:
+```
+.gitignore
+
+terraform.*
+.terraform/
+.terraform.*
+```
 
 # Step 5. CircleCI
 1. Create [CircleCI](https://circleci.com/) account sign in with Github account.
