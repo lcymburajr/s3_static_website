@@ -30,6 +30,10 @@ Install Homebrew for Dependencies:
 ```
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
+Install Git:
+```
+$ brew install git
+```
 Install Terraform:
 ```
 $ brew install terraform
