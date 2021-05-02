@@ -81,7 +81,7 @@ Default output format [None]: json
 provider.tf 
 
 provider "aws" {
-    region = "us-east-1"
+    region = "<region>"
     profile = "<profile_name>"
 }
 
@@ -91,7 +91,7 @@ provider "aws" {
 state.tf 
 
 resource "aws_s3_bucket" "terraform-state" {
-  bucket = "terraform-state-static-website"
+  bucket = "<bucket_name>"
   acl    = "private"
   
   server_side_encryption_configuration {
@@ -103,15 +103,15 @@ resource "aws_s3_bucket" "terraform-state" {
   }
 
   tags = {
-    Name = "Terraform state"
+    Name = "Terraform State"
   }
 }
 ```
-3. Init terraform:
+3. Init Terraform:
 ```
 $ terraform init
 ```
-4. Check terraform:
+4. Check Terraform:
 ```
 $ terraform plan
 ```
@@ -125,9 +125,9 @@ backend.tf
 
 terraform {
  backend "s3" {
-   bucket  = "terraform-state-static-website"
+   bucket  = "<bucket_name>"
    key     = "terraform.tfstate"
-   region  = "us-east-1"
+   region  = "<region>"
    profile = "<profile_name>"
  }
 }
@@ -138,7 +138,7 @@ terraform {
 s3_static_website.tf
 
 resource "aws_s3_bucket" "site" {
-  bucket = "s3-static-website.test.com"
+  bucket = "<bucket_name>"
   acl    = "public-read"
   policy = jsonencode({
     Version = "2012-10-17"
@@ -149,8 +149,8 @@ resource "aws_s3_bucket" "site" {
         Principal = "*"
         Action    = "s3:GetObject"
         Resource = [
-          "arn:aws:s3:::s3-static-website.test.com",
-          "arn:aws:s3:::s3-static-website.test.com/*",
+          "arn:aws:s3:::<bucket_name>",
+          "arn:aws:s3:::<bucket_name>/*",
         ]
       },
     ]
@@ -168,11 +168,11 @@ resource "aws_s3_bucket" "site" {
 ```
 ***Reference: [Static Website](https://learn.hashicorp.com/tutorials/terraform/cloudflare-static-website)***
 
-8. Init terraform:
+8. Init Terraform:
 ```
 $ terraform init
 ```
-9. Check terraform:
+9. Check Terraform:
 ```
 $ terraform plan
 ```
@@ -212,7 +212,7 @@ jobs:
       - checkout
       - aws-s3/copy:
           from: index.html
-          to: 's3://s3-static-website.test.com/index.html'
+          to: 's3://<bucket_name>/index.html'
 
 ```
 ***Reference: [S3 Orb](https://circleci.com/developer/orbs/orb/circleci/aws-s3)***
@@ -226,12 +226,12 @@ AWS_REGION
 
 # Step 6. HTML
 
-1. In project create a new git branch:
+1. In project create a new Git branch:
 ```
 git checkout -b feature/html
 ```
 
-2. Create Index page:
+2. Create index page:
 ```
 index.html
 
@@ -258,6 +258,9 @@ git push
 
 4. Go to Github, create a pull request, review and merge.
 1. Wait for CircleCI finish build.
-1. Go to S3 static bucket url and you should see your webpage!
+1. Go to bucket website endpoint and you should see your webpage!
+```
+http://<bucket_name>.s3-website-<region>.amazonaws.com
+```
 
 
