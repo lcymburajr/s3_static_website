@@ -258,7 +258,7 @@ git push
 
 4. Go to Github, create a pull request, review and merge.
 1. Wait for CircleCI finish build.
-1. Go to bucket website endpoint and you should see your webpage!
+1. Go to bucket website endpoint and you should see your site:
 ```
 http://<bucket_name>.s3-website-<region>.amazonaws.com
 ```
